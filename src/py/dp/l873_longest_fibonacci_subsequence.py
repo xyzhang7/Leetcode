@@ -47,9 +47,12 @@ def lenLongestFibSubseqDP(arr: List[int]) -> int:
         for j in range(i + 1, N):
             if j >= i * i:
                 break
+            ##############################################
+            # TODO: improve code below time complexity by hashmap or divide and conqure
             for k in range(i):
                 if arr[k] + arr[i] == arr[j]:
                     dp[i][j] = max(dp[k][i] + 1, dp[i][j])
+            ##############################################
 
             ans = max(ans, dp[i][j])
     return ans
