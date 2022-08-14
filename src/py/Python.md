@@ -1,4 +1,4 @@
-* Divide by integer
+* Division by integer
 ```python
 x = 5
 x // 2     # = int(x/2)
@@ -15,8 +15,13 @@ if (x & 1): pass      # odd number if x & 1 == 1; even otherwise
 from math import log2, ceil, floor
 ```
 
-* Max/Min Range
+* Max/Min
+
 ```python
-MAX = float('inf')
+import heapq
+k, array = 0, list()
+
+MAX = float('inf')                          # = Integer.MAX_VALUE
+k_smallest = heapq.nsmallest(k, array)      # find k smallest in array (详见source code)
 ```
 
