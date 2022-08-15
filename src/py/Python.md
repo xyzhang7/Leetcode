@@ -1,4 +1,4 @@
-* Division by integer
+* Bitwise operation
 ```python
 x = 5
 x // 2     # = int(x/2)
@@ -25,3 +25,24 @@ MAX = float('inf')                          # = Integer.MAX_VALUE
 k_smallest = heapq.nsmallest(k, array)      # find k smallest in array (详见source code)
 ```
 
+* Iteration
+
+```python
+from itertools import product
+m, n = 0, 0
+for i, j in product(range(m), range(n)):    # = for i in range(m):
+    pass                                    #       for j in range(n): 
+    
+```
+
+* Char to Integer
+
+```python
+>>> chr(97)    # Convert char <--> ASCII value
+'a'
+>>> ord('a')
+97
+
+number = '10'  # convert from string/char to integer value
+int(number)
+```
