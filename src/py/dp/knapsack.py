@@ -1,3 +1,4 @@
+from math import floor, sqrt
 from typing import List
 
 
@@ -85,8 +86,69 @@ def complete_knapsack(weights: List[int], values: List[int], W: int) -> int:
     :return: maximum value thr thief can get given the limit of W
     """
     N = len(values)
+    dp = [[0] * (W+1) for _ in range(N+1)]
+    for i in range(1, N+1):
+        for j in range(1, W+1):
+            k = 0
+            while weights[i] * k <= j:
+                dp[i][j] = max(dp[i][j], dp[i][j - weights[i] * k] + values[i] * k)
+            dp[i][j] = max(dp[i][j], dp[i-1][j])
+    return dp[N][W]
 
+def complete_knapsack_o1space(weights: List[int], values: List[int], W: int) -> int:
+    """
+    Complete Knapsack Space: O(NW) -> O(W)
+    """
+    N = len(values)
+    dp = [0] * (W+1)
+    for i in range(N):
+        for j in range(W+1):
+            k = 1
+            while weights[i] * k <= j:
+                dp[j] = max(dp[j], dp[j - weights[i] * k] + values[i] * k)
+    return dp[W]
+
+def numSquares_kanpsack_o1space(n: int) -> int:
+    """
+    LC 279 Given an integer n, return the least number of perfect square numbers that sum to n.
+
+    A perfect square is an integer that is the square of an integer; in other words, it is the product of some
+    integer with itself. For example, 1, 4, 9, and 16 are perfect squares while 3 and 11 are not.
+    """
+    N = floor(sqrt(n))
+    MAX = 10000
+    dp = [MAX] * (n + 1)
+    dp[0] = 0
+    for i in range(N):
+        for j in range(1 + n):
+            v1 = dp[j]
+            v2 = dp[j - (i+1) ** 2] + 1 if j >= (i+1) ** 2 else MAX
+            dp[j] = min(v1, v2)
+    return dp[n]
+
+def change(amount: int, coins: List[int]) -> int:
+    """
+    LC 518 Coin Change II You are given an integer array coins representing coins of different denominations and an
+    integer amount representing a total amount of money.
+
+    Return the number of combinations that make up that amount. If that amount of money cannot be made up by any
+    combination of the coins, return 0.
+
+    You may assume that you have an infinite number of each kind of coin.
+
+    The answer is guaranteed to fit into a signed 32-bit integer.
+    """
+    N = len(coins)
+    dp = [[0] * (amount+1) for _ in range(N+1)]
+    for i in range(1, N+1):
+        dp[i][0] = 1
+        for j in range(1, amount+1):
+            k = 1
+            while k * coins[i-1] <= j:
+                dp[i][j] += dp[i][j - k*coins[i-1]]
+            dp[i][j] += dp[i-1][j]
+    return dp[N][amount]
 
 if __name__ == "__main__":
-    canPartition_knapscak_bool([100])
+    change(5, [1, 2, 5])
 
