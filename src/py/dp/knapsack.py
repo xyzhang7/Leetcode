@@ -140,15 +140,86 @@ def change(amount: int, coins: List[int]) -> int:
     """
     N = len(coins)
     dp = [[0] * (amount+1) for _ in range(N+1)]
+    dp[0][0] = 1
     for i in range(1, N+1):
-        dp[i][0] = 1
-        for j in range(1, amount+1):
+        # dp[i][0] = 1
+        for j in range(amount+1):
             k = 1
             while k * coins[i-1] <= j:
-                dp[i][j] += dp[i][j - k*coins[i-1]]
+                dp[i][j] += dp[i-1][j - k*coins[i-1]]
+                k = k + 1
             dp[i][j] += dp[i-1][j]
     return dp[N][amount]
 
+def multi_knapsack(values: List[int], weights: List[int], numbers: List[int], W: int) -> int:
+    """
+    Multiple knapsack: The greedy algorithm does not work. The ith item CAN BE TAKEN max numbers[i] times, and its
+    worth vi dollars and weighs wi pounds, where vi and wi are integers. The thief wants to take as valuable a load
+    as possible, but he can carry at most W pounds in his knapsack, for some integer W .
+    :param weights: weight of each item
+    :param values: value of each item
+    :param numbers: maximum number of item i
+    :param W: maximum weight the thief can carry
+    :return: maximum value thr thief can get given the limit of W
+    """
+    N = len(values)
+    dp = [[0] * (W+1) for _ in range(N+1)]
+    for i in range(1, N+1):
+        for j in range(1, W+1):
+            k = 1
+            while k <= numbers[i-1] and k * weights[i-1] <= j:
+                dp[i][j] = max(dp[i][j], dp[i-1][j - k * weights[i-1]] + k * values[i-1])
+                k = k + 1
+            dp[i][j] = max(dp[i][j], dp[i-1][j])
+    return dp[N][W]
+
+def multi_knapsack_o1space(values: List[int], weights: List[int], numbers: List[int], W: int) -> int:
+    """
+    Multi Knapsack in o1 space
+    Time : O(sum(n_i) * W) -> 10 ^ 2
+    Note: we can not use arithmetic progression to simplify the time complexity
+    """
+    N = len(values)
+    dp = [0] * (W+1)
+    for i in range(N):
+        for j in range(W, weights[i]-1, -1):
+            for k in range(1, numbers[i]+1):
+                if k * weights[i] <= j:
+                    dp[j] = max(dp[j], dp[j - k * weights[i]] + k * values[i])
+    return dp[W]
+
+def multi_knapsack_binary_compression(values: List[int], weights: List[int], numbers: List[int], W:int) -> int:
+    """
+    Multi Knapsack optimization I: binary compression
+    Time: O(sum(log(n_i)) * W) -> 10 ^ 3
+    Space: O(sum(log(n_i)) + W)
+    """
+    comp_values, comp_weights = list(), list()
+
+    # stretch multi knapsack problem into partial knapsack and compress weights and values in binary-wise
+    for i in range(len(values)):
+        k = 1
+        n = numbers[i]
+        # compress number[i] into a list of integer [a1, a2, a3 ..], s.t. sum(a) = number
+        while k <= n:
+            comp_values.append(values[i] * k)
+            comp_weights.append(weights[i] * k)
+            n -= k
+            k <<= 1
+        if n > 0:
+            comp_values.append(values[i] * n)
+            comp_weights.append(weights[i] * n)
+
+    # O(N) space partial knapsack algorithm
+    N = len(comp_values)
+    dp = [0] * (W+1)
+    for i in range(N):
+        for j in range(W, comp_weights[i]-1, -1):
+            dp[j] = max(dp[j], dp[j - comp_weights[i]] + comp_values[i])
+    return dp[W]
+
+
+
 if __name__ == "__main__":
-    change(5, [1, 2, 5])
+    multi_knapsack_binary_compression([1, 2], [1, 2], [7, 5], 5)
 

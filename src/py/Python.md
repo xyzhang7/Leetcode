@@ -10,11 +10,21 @@ x ^ 1      # find sibling of node in binary tree (root idx = 1)
 if (x & 1): pass      # odd number if x & 1 == 1; even otherwise
 ```
 
-* Math Package
+* Package: Math
 ```python
 from math import log2, ceil, floor
 int(1e10) == 10 ** 10       # 10^10
 ```
+
+* Package: functools.lru_cache as DP memo
+```python
+from functools import lru_cache
+@lru_cache
+def recur_with_memo():
+    pass
+```
+
+* Package: timeit.repeat to count program's running time
 
 * Max/Min
 
