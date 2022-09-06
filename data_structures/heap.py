@@ -11,3 +11,10 @@ IMPLEMENT HEAP:
 class heap:
     def __init__(self):
         pass
+
+#######################
+# TODO: implement priority Queue
+
+class priorityQueue:
+    def __init__(self):
+        pass

@@ -11,6 +11,22 @@ You may assume that you have an infinite number of each kind of coin.
 
 
 def coinChange(coins: List[int], amount: int) -> int:
+    N = len(coins)
+    MAX = amount + 1
+    dp = [[MAX] * (amount + 1) for _ in range(N + 1)]
+    dp[0][0] = 0
+    for i in range(1, N + 1):
+        for j in range(amount + 1):
+            dp[i][j] = dp[i - 1][j]
+
+            k = 1
+            while k * coins[i - 1] <= j:
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - k * coins[i - 1]] + k)
+                k += 1
+    return dp[N][amount]
+
+
+def coinChange_optimal(coins: List[int], amount: int) -> int:
     MAX = amount
     dp = [0] + [MAX] * amount
 
@@ -24,4 +40,4 @@ def coinChange(coins: List[int], amount: int) -> int:
 
 
 if __name__ == "__main__":
-    print(coinChange([1, 2, 5], 11))
+    coinChange([1, 2, 5], 3)
