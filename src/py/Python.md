@@ -35,7 +35,7 @@ k_smallest = heapq.nsmallest(k, array)      # find k smallest in array (详见so
 ```
 
 
-* Iteration and Slice
+* Iteration, Slice, Counter
 
 ```python
 from itertools import product
@@ -56,6 +56,19 @@ from collections import Counter             # use Counter to count the frequency
 chars = Counter()
 chars['a'] += 1                             # increment 
 chars['a'] -= 1
+
+>>> a = [1, 1, 2, 2, 3, 4]
+>>> counter = Counter(a)                    # Directly convert a list to hashmap counter
+>>> counter
+Counter({1: 2, 2: 2, 3: 1, 4: 1})
+>>> counter[10] > 0                         # Safe for invalid keys
+
+from collections import defaultdict
+count_word = defaultdict(int)               # = count_word = dict()
+count_word["hello"] += 1                    # = if "hello" in count_word:
+                                            #       count_word["hello"] += 1
+                                            #   else:
+                                            #       count_word["hello"] = 0
 ```
 
 * Char to Integer
