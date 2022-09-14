@@ -67,8 +67,26 @@ def findSubstringSlidingWindow(s: str, words: List[str]) -> List[int]:
         slidingWindow(i)
     return ans
 
+
+def containsNearbyAlmostDuplicate(nums: List[int], indexDiff: int, valueDiff: int) -> bool:
+    if indexDiff < 1 or valueDiff < 0:
+        return False
+    dic = collections.OrderedDict()
+    for n in nums:
+        key = n if not valueDiff else n // valueDiff
+        for m in (dic.get(key), dic.get(key-1), dic.get(key+1)):
+            if m is not None and abs(n - m) <= valueDiff:
+                return True
+            if len(dic) == indexDiff:
+                # first in first out, pop the oldest item in dic
+                dic.popitem(False)
+            dic[key] = n
+    return False
+
+
 if __name__ == "__main__":
-    findSubstringSlidingWindow("dddddddddddd", ["dddd","dddd"])
-    findSubstringSlidingWindow("aaa", ["a","a"])
-    findSubstringSlidingWindow("barfoothefoobarman", ["foo","bar"])
+    containsNearbyAlmostDuplicate([1, 5, 9, 1, 5, 9], 2, 3)
+    # findSubstringSlidingWindow("dddddddddddd", ["dddd","dddd"])
+    # findSubstringSlidingWindow("aaa", ["a","a"])
+    # findSubstringSlidingWindow("barfoothefoobarman", ["foo","bar"])
     # findSubstringSlidingWindow("lingmindraboofooowingdingbarrwingmonkeypoundcake", ["fooo","barr","wing","ding","wing"])

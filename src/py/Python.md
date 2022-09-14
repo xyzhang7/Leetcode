@@ -69,6 +69,13 @@ count_word["hello"] += 1                    # = if "hello" in count_word:
                                             #       count_word["hello"] += 1
                                             #   else:
                                             #       count_word["hello"] = 0
+
+from collections import OrderedDict
+dic = OrderedDict()                         # first in first out dict
+val = dic.get(key)
+if val is not None:                         # 不可以用 if val: pass 代替
+    pass                                    # 因为 val 可能是 0, False 之类的值
+dic.popitem(False)                          # First In First Out
 ```
 
 * Char to Integer
