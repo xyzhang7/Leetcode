@@ -19,6 +19,8 @@ int(1e10) == 10 ** 10       # 10^10
 
 while number > 0:
     number, digit = divmod(number, 10)  # get each digit of number
+
+x ** 2                      # x ** 2 is MUCH FASTER THAN x * x
 ```
 
 
