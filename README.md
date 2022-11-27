@@ -15,5 +15,5 @@ My daily leetcode practice
 
 ### Build Support
 ```bash
-python3 build_support/mdcal.py 2022 6
+python3 build_support/mdcal.py_code 2022 6
 ```

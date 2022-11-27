@@ -68,4 +68,4 @@ if __name__ == "__main__":
         year, month = [int(a) for a in argv[1:3]]
         print_calendar(year, month)
     else:
-        print('Usage: python mdcal.py [year] [month]')
+        print('Usage: python mdcal.py_code [year] [month]')

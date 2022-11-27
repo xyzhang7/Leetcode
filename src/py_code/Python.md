@@ -38,6 +38,7 @@ k_smallest = heapq.nsmallest(k, array)      # find k smallest in array (详见so
 
 
 * Iteration, Slice, Counter
+  * Bit-by-Bit Computation
 
 ```python
 from itertools import product
@@ -49,6 +50,12 @@ arr = [1, 2, 3, 4]                          # given a string/list/tuple, slice t
 a = '1234'                                  # and the slice will just take a copy of each original element
 arr[::-1]                                   # modify the slice will not change the original object
 a[::-1]
+
+result = []
+result.append('4', '3', '2', '1')           # 从后往前运算，得到不同位置的数
+result.reverse()                            # 把数位进行反转
+''.join(result)                             # 把数位合并成字符串
+>>> 1234
 
 board = [[0] * 10 for _ in range(10)]       # = if board[i][j] == 'S' or board[i][j] == 'X' and ...
 if board[i][j] in 'SXE':                    # given a board of characters, it's Start position is 'S'
@@ -80,8 +87,8 @@ if val is not None:                         # 不可以用 if val: pass 代替
 dic.popitem(False)                          # First In First Out
 ```
 
-* Char to Integer
-
+* Char/Str to Integer
+zfill() method adds zeros (0) at the beginning of the string, until it reaches the specified length.
 ```python
 >>> chr(97)    # Convert char <--> ASCII value
 'a'
@@ -90,6 +97,11 @@ dic.popitem(False)                          # First In First Out
 
 number = '10'  # convert from string/char to integer value
 int(number)
+str(10)
+
+binary_number = '10001'
+binary_number.zfill(10)
+>>> 0000010001
 ```
 
 ## Data Structures
